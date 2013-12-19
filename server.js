@@ -6,7 +6,17 @@ function start(port, route, handle) {
     var pathname = url.parse(request.url).pathname;
     console.log("Request for '" + pathname + "' received.");
 
-    route(handle, pathname, response);
+    var postData = "";
+    var chunkCount = 0;
+    request.setEncoding("utf8");
+    request.addListener("data", function(postDataChunk) {
+      postData += postDataChunk;
+      chunkCount++;
+    });
+    request.addListener("end", function() {
+      console.log("Received " + chunkCount + " chunks of POST data.");
+      route(handle, pathname, response, postData);
+    });
   }
 
   http.createServer(onRequest).listen(port);

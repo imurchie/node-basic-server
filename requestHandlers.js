@@ -1,26 +1,25 @@
-var exec = require("child_process").exec;
+var fs          = require("fs");
+var queryString = require("querystring");
 
-function start(response) {
+function start(response, postData) {
   console.log("Request handler 'start' was called.");
 
-  exec("ls -la", function(error, stdout, stderr) {
-    setContentType(response);
-    response.write(stdout);
+  fs.readFile("./public/index.html", "utf8", function(error, data) {
+    response.writeHead(200, {
+    "Content-Type": "text/html"
+  });
+    response.write(data);
     response.end();
   });
 }
 
-function upload(response) {
+function upload(response, postData) {
   console.log("Request handler 'upload' was called.");
-  setContentType(response);
-  response.write("Hello Upload");
-  response.end();
-}
-
-function setContentType(response) {
   response.writeHead(200, {
     "Content-Type": "text/plain"
   });
+  response.write("You have sent: " + queryString.parse(postData).text);
+  response.end();
 }
 
 exports.start = start;
