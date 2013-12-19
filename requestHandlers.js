@@ -27,7 +27,7 @@ function show(response) {
   response.writeHead(200, {
     "Content-Type": "image/png"
   });
-  fs.createReadStream("/tmp/text.png").pipe(response);
+  fs.createReadStream("./tmp/test.png").pipe(response);
 }
 
 exports.start   = start;
