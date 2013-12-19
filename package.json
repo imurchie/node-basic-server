@@ -1,0 +1,9 @@
+{
+  "name": "basic-server",
+  "description": "A very basic server in Node.js",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "formidable": "*"
+  }
+}
