@@ -22,5 +22,14 @@ function upload(response, postData) {
   response.end();
 }
 
-exports.start = start;
-exports.upload = upload;
+function show(response) {
+  console.log("Request handler 'show' was called.");
+  response.writeHead(200, {
+    "Content-Type": "image/png"
+  });
+  fs.createReadStream("/tmp/text.png").pipe(response);
+}
+
+exports.start   = start;
+exports.upload  = upload;
+exports.show    = show;
